@@ -1,0 +1,1 @@
+console.log(require('./main.js')(process.argv[2]))
