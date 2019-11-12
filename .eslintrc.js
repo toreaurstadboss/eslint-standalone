@@ -10,10 +10,11 @@ module.exports = {
         "ecmaFeatures": {
          
         }
-    },
-  rules: {
+  },
+  "rules": {
     "semi": "off",
-    "space-before-function-paren": "off"
+    "space-before-function-paren": "off",
+    "arrow-body-style": ["error", "always"]
   },
   plugins: ['json']
 };
