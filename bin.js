@@ -9,9 +9,9 @@ module.exports = (() => {
   const args = minimist(process.argv.slice(2));
 
   // Read a default eslint config
-  console.log("Dirname: " + __dirname);
-  let configPath = path.resolve(__dirname, '.eslintrc.js');
-  let baseConfig = require(configPath);
+  //console.log("Dirname: " + __dirname);
+  let configPath = path.resolve('./eslintrc.js');
+  let baseConfig = require('./.eslintrc.js');
 
   // Check if the path to a client config was specified
   if (args.conf) {
