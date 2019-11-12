@@ -6,7 +6,18 @@ const path = require('path');
 const chalk = require('chalk');
 
 module.exports = (() => {
-  const args = minimist(process.argv.slice(2));
+  const args = process.argv.slice(2);
+
+ let fix = false;
+
+ console.log('Looking at provided arguments:');
+  for (var i = 0; i < args.length; i++) {
+    console.log(args[i]);
+    if (args[i] === '--fix') {
+     fix = true;
+     console.log('Fix option provided: ' + fix);
+    }
+  }    
 
   // Read a default eslint config
   //console.log("Dirname: " + __dirname);
@@ -38,6 +49,9 @@ module.exports = (() => {
   }
 
   console.log(`> eslint has loaded config from: ${configPath}`);
+
+  console.log('base config: ');
+  console.log(baseConfig);
 
   const cli = new CLIEngine({ baseConfig });
   let filesDir = [];

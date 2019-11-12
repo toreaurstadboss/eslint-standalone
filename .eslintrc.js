@@ -1,9 +1,15 @@
 module.exports = {
   extends: 'eslint-config-standard',
-  env: { node: true },
+   "env": {
+        "browser": true,
+        "node": true
+    },
   "parserOptions": {
-        "ecmaVersion": 8,
-        "sourceType": "module"
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+         
+        }
     },
   rules: {
     "semi": "off",
