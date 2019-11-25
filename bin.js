@@ -8,43 +8,76 @@ const chalk = require('chalk');
 module.exports = (() => {
   const args = process.argv.slice(2);
 
- let fix = false;
+  let fix = false;
 
- console.log('Looking at provided arguments:');
+  console.log('Looking at provided arguments:');
   for (var i = 0; i < args.length; i++) {
     console.log(args[i]);
     if (args[i] === '--fix') {
-     fix = true;
-     console.log('Fix option provided: ' + fix);
+      fix = true;
+      console.log('Fix option provided: ' + fix);
     }
-  }    
+  }
 
   // Read a default eslint config
   //console.log("Dirname: " + __dirname);
-  let configPath = path.resolve('./eslintrc.js');
-  let baseConfig = require('./.eslintrc.js');
+
+  let configPath = ''
+  let baseConfig = ''
+  let errorEncountered = false;
+
+  console.info('Trying to resolve .eslintrc.js file')
+
+  try {
+    console.info('..Trying local folder')
+    configPath = path.resolve('./eslintrc.js');
+    baseConfig = require('./.eslintrc.js');
+  }
+  catch (error) {
+    console.info(error);
+    errorEncountered = true;
+  }
 
   // Check if the path to a client config was specified
   if (args.conf) {
     if (Array.isArray(args.conf)) {
       const error = chalk.bold.redBright(`> eslint requires a single config file`);
-
-      return console.log(error);
+      errorEncountered = true;
+      console.warn(error);
     }
 
     try {
       configPath = path.resolve(process.cwd(), args.conf);
       baseConfig = require(configPath);
+      errorEncountered = false;
     } catch (error) {
-      return console.log(error);
+      errorEncountered = true;
+      console.log(error);
     }
   } else {
     // Check if a client app has .eslintrc.js in the root directory
     try {
       configPath = path.resolve(process.cwd(), '.eslintrc.js');
       baseConfig = require(configPath);
+      errorEncountered = false;
     } catch (error) {
-      return console.log(error);
+      errorEncountered = true;
+      console.log(error);
+    }
+  }
+
+  if (errorEncountered === true) {
+    try {
+      let knownHomeDirectoryOnOSes = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+      let knownHomeDirectoryOnOSesNormalized = path.normalize(knownHomeDirectoryOnOSes + '/.eslintrc')
+      configPath = path.resolve(knownHomeDirectoryOnOSesNormalized);
+      baseConfig = require(configPath);
+      errorEncountered = false;
+    } catch (error) {
+      errorEncountered = true;
+      console.error(error);
+      process.exitCode = 1; //signal an error has occured. https://stackoverflow.com/questions/5266152/how-to-exit-in-node-js
+      return;
     }
   }
 
