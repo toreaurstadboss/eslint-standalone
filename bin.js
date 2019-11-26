@@ -4,6 +4,7 @@ const CLIEngine = require('eslint').CLIEngine;
 const minimist = require('minimist');
 const path = require('path');
 const chalk = require('chalk');
+const eslintPluginCompat = require('eslint-plugin-compat');
 
 module.exports = (() => {
   const args = process.argv.slice(2);
@@ -30,7 +31,7 @@ module.exports = (() => {
 
   try {
     console.info('..Trying local folder')
-    configPath = path.resolve('./eslintrc.js');
+    configPath = path.resolve(__dirname + './eslintrc.js');
     baseConfig = require('./.eslintrc.js');
   }
   catch (error) {
