@@ -5,6 +5,7 @@ const minimist = require('minimist');
 const path = require('path');
 const chalk = require('chalk');
 const eslintPluginCompat = require('eslint-plugin-compat');
+const eslintIe11 = require('eslint-plugin-ie11');
 
 module.exports = (() => {
   const args = process.argv.slice(2);
@@ -111,6 +112,8 @@ module.exports = (() => {
 
     console.log(chalk.bold.redBright(`> eslint has found ${report.errorCount} error(s)`));
     console.log(formatter(report.results));
+
+    process.exitCode = 1; //eslint errors encountered means the process should exit not with exit code 0.
 
     return;
   }

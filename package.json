@@ -4,6 +4,9 @@
   "description": "eslint standalone package with pkg",
   "main": "index.js",
   "bin": "bin.js",
+  "pkg": {
+    "assets": "node_modules/eslint-plugin-ie11/**/*.*"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
