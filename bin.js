@@ -71,7 +71,10 @@ module.exports = (() => {
       let knownHomeDirectoryOnOSes = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
       let knownHomeDirectoryOnOSesNormalized = path.normalize(knownHomeDirectoryOnOSes + '/.eslintrc')
       configPath = path.resolve(knownHomeDirectoryOnOSesNormalized);
-      baseConfig = require(configPath);
+      baseConfig = `{
+        "extends": "${configPath}"         
+      }`;
+
       errorEncountered = false;
     } catch (error) {
       errorEncountered = true;
