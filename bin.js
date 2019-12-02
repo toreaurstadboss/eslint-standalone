@@ -18,6 +18,7 @@ module.exports = (() => {
     if (args[i] === '--fix') {
       fix = true;
       console.log('Fix option provided: ' + fix);
+      console.warn('Fix is not supported yet, you must manually adjust the files.');
     }
   }
 
@@ -28,16 +29,32 @@ module.exports = (() => {
   let baseConfig = ''
   let errorEncountered = false;
 
-  console.info('Trying to resolve .eslintrc.js file')
+  console.info('Trying to resolve .eslintrc.js file');
 
-  try {
-    console.info('..Trying local folder')
-    configPath = path.resolve(__dirname + './eslintrc.js');
-    baseConfig = require('./.eslintrc.js');
-  }
-  catch (error) {
-    console.info(error);
-    errorEncountered = true;
+  let curDir = __dirname;
+
+  for (let i = 0; i < 100; i++) {
+    try {
+      if (i > 0) {
+        console.info('Trying current folder: ' + curDir);
+        let oldCurDir = curDir;
+        curDir = path.resolve(curDir, '..'); //parent folder 
+        if (oldCurDir == curDir) {
+          //at the top of media disk volume - exit for loop trying to retrieve the .eslintrc.js file from parent folder
+          console.info('It is recommended to save an .eslintrc.js file in the folder structure where you run this tool.')
+          break;
+        }
+      }
+      configPath = path.join(curDir + '/.eslintrc.js');
+      configPath = path.normalize(configPath);
+      baseConfig = require(configPath);
+      errorEncountered = false;
+      break; //exit the for loop
+    }
+    catch (error) {
+      process.stdout.write('.');
+      errorEncountered = true;
+    }
   }
 
   // Check if the path to a client config was specified
@@ -50,16 +67,6 @@ module.exports = (() => {
 
     try {
       configPath = path.resolve(process.cwd(), args.conf);
-      baseConfig = require(configPath);
-      errorEncountered = false;
-    } catch (error) {
-      errorEncountered = true;
-      console.log(error);
-    }
-  } else {
-    // Check if a client app has .eslintrc.js in the root directory
-    try {
-      configPath = path.resolve(process.cwd(), '.eslintrc.js');
       baseConfig = require(configPath);
       errorEncountered = false;
     } catch (error) {
@@ -88,8 +95,8 @@ module.exports = (() => {
 
   console.log(`> eslint has loaded config from: ${configPath}`);
 
-  console.log('base config: ');
-  console.log(baseConfig);
+  // console.log('base config: ');
+  // console.log(baseConfig);
 
   const cli = new CLIEngine({ baseConfig });
   let filesDir = [];
@@ -117,6 +124,5 @@ module.exports = (() => {
 
     return;
   }
-
   console.log(chalk.bold.greenBright('> eslint finished without any errors!'));
 })();
