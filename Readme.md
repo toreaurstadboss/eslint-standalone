@@ -116,5 +116,14 @@ REM After adding the tool to the path environment variable
 eslint-standalone
 ```
 
+#### Other recommended tools for Visual Studio for linting
+Maybe TypeScriptAnalyzer is such a tool. It is port of Web Analyzer, which is only supported in VS 2015. 
+TypeScriptAnalyzer is supported in VS 2017 and VS 2019. 
 
+<a href='https://marketplace.visualstudio.com/items?itemName=RichNewman.TypeScriptAnalyzer'>
+https://marketplace.visualstudio.com/items?itemName=RichNewman.TypeScriptAnalyzer</a>
+
+
+
+Last update 02.12.2019
 
