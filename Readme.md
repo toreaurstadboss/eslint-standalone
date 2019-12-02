@@ -103,3 +103,18 @@ REM or where you have clones this repo
 eslint-standalone.exe
 ```
 
+#### Adding the tool to your path environment variable
+It is recommended that you add the tool to your path environment variable in your OS. Therefore, you can 
+run the tool without giving a full path to it. You can run the 'refreshenv' command to refresh the environment variables
+in a shell, if you have installed Chocolatey.
+
+<a href='https://wwww.chocolatey.org'>Chocolatey.org</a>
+
+
+```bash
+REM After adding the tool to the path environment variable
+eslint-standalone
+```
+
+
+
