@@ -11,7 +11,7 @@ module.exports = {
   "rules": {
     "ie11/no-collection-args": ["error"],
     "ie11/no-for-in-const": ["error"],
-    "ie11/no-loop-func": ["warn"],
+    //"ie11/no-loop-func": ["warn"],
     "ie11/no-weak-collections": ["error"]
   }
 };
