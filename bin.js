@@ -99,6 +99,7 @@ module.exports = (() => {
   // console.log(baseConfig);
 
   const cli = new CLIEngine({ baseConfig });
+
   let filesDir = [];
 
   if (args.dir) {
@@ -107,7 +108,7 @@ module.exports = (() => {
       .concat(args.dir)
       .map((item) => path.resolve(process.cwd(), item));
   } else {
-    filesDir = ['./']
+    filesDir = ['./**.js', './**.html', './**.htm']
   }
 
   console.log(`> eslint is checking the following dir: ${filesDir}`);
