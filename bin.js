@@ -108,7 +108,7 @@ module.exports = (() => {
       .concat(args.dir)
       .map((item) => path.resolve(process.cwd(), item));
   } else {
-    filesDir = ['./**.js', './**.html', './**.htm']
+    filesDir = ['./.']
   }
 
   console.log(`> eslint is checking the following dir: ${filesDir}`);
