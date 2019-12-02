@@ -1,16 +1,21 @@
 {
   "name": "eslint-standalone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "eslint standalone package with pkg",
   "main": "index.js",
   "bin": "bin.js",
+  "website": "https://github.com/toreaurstadboss/eslint-standalone",
   "pkg": {
     "assets": "node_modules/eslint-plugin-ie11/**/*.*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toreaurstadboss/eslint-standalone.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Tore",
+  "author": "Tore Aurstad",
   "browserslist": [
     "ie 9",
     "ie 10",
