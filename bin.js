@@ -1,58 +1,61 @@
 #!/usr/bin/env node
 
-const CLIEngine = require('eslint').CLIEngine;
-const minimist = require('minimist');
-const path = require('path');
-const chalk = require('chalk');
-const eslintPluginCompat = require('eslint-plugin-compat');
-const eslintIe11 = require('eslint-plugin-ie11');
+const CLIEngine = require("eslint").CLIEngine;
+const minimist = require("minimist");
+const path = require("path");
+const chalk = require("chalk");
+const eslintPluginCompat = require("eslint-plugin-compat");
+const eslintIe11 = require("eslint-plugin-ie11");
 
 module.exports = (() => {
   const args = process.argv.slice(2);
 
   let fix = false;
 
-  console.log('Looking at provided arguments:');
+  console.log("Looking at provided arguments:");
   for (var i = 0; i < args.length; i++) {
     console.log(args[i]);
-    if (args[i] === '--fix') {
+    if (args[i] === "--fix") {
       fix = true;
-      console.log('Fix option provided: ' + fix);
-      console.warn('Fix is not supported yet, you must manually adjust the files.');
+      console.log("Fix option provided: " + fix);
+      console.warn(
+        "Fix is not supported yet, you must manually adjust the files."
+      );
     }
   }
 
   // Read a default eslint config
   //console.log("Dirname: " + __dirname);
 
-  let configPath = ''
-  let baseConfig = ''
+  let configPath = "";
+  let baseConfig = "";
   let errorEncountered = false;
 
-  console.info('Trying to resolve .eslintrc.js file');
+  console.info("Trying to resolve .eslintrc.js file");
 
   let curDir = __dirname;
 
   for (let i = 0; i < 100; i++) {
     try {
       if (i > 0) {
-        console.info('Trying current folder: ' + curDir);
+        console.info("Trying current folder: " + curDir);
         let oldCurDir = curDir;
-        curDir = path.resolve(curDir, '..'); //parent folder 
+        curDir = path.resolve(curDir, ".."); //parent folder
         if (oldCurDir == curDir) {
           //at the top of media disk volume - exit for loop trying to retrieve the .eslintrc.js file from parent folder
-          console.info('It is recommended to save an .eslintrc.js file in the folder structure where you run this tool.')
+          console.info(
+            "It is recommended to save an .eslintrc.js file in the folder structure where you run this tool."
+          );
           break;
         }
       }
-      configPath = path.join(curDir + '/.eslintrc.js');
+      configPath = path.join(curDir + "/.eslintrc.js");
       configPath = path.normalize(configPath);
       baseConfig = require(configPath);
       errorEncountered = false;
       break; //exit the for loop
-    }
-    catch (error) {
-      process.stdout.write('.');
+    } catch (error) {
+      process.stdout.write(".");
       errorEncountered = true;
     }
   }
@@ -60,7 +63,9 @@ module.exports = (() => {
   // Check if the path to a client config was specified
   if (args.conf) {
     if (Array.isArray(args.conf)) {
-      const error = chalk.bold.redBright(`> eslint requires a single config file`);
+      const error = chalk.bold.redBright(
+        `> eslint requires a single config file`
+      );
       errorEncountered = true;
       console.warn(error);
     }
@@ -77,8 +82,11 @@ module.exports = (() => {
 
   if (errorEncountered === true) {
     try {
-      let knownHomeDirectoryOnOSes = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
-      let knownHomeDirectoryOnOSesNormalized = path.normalize(knownHomeDirectoryOnOSes + '/.eslintrc')
+      let knownHomeDirectoryOnOSes =
+        process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+      let knownHomeDirectoryOnOSesNormalized = path.normalize(
+        knownHomeDirectoryOnOSes + "/.eslintrc"
+      );
       configPath = path.resolve(knownHomeDirectoryOnOSesNormalized);
       baseConfig = `{
         "extends": "${configPath}"         
@@ -108,7 +116,7 @@ module.exports = (() => {
       .concat(args.dir)
       .map((item) => path.resolve(process.cwd(), item));
   } else {
-    filesDir = ['./.']
+    filesDir = ["./."];
   }
 
   console.log(`> eslint is checking the following dir: ${filesDir}`);
@@ -118,12 +126,15 @@ module.exports = (() => {
   if (report.errorCount > 0) {
     const formatter = cli.getFormatter();
 
-    console.log(chalk.bold.redBright(`> eslint has found ${report.errorCount} error(s)`));
+    console.log(
+      chalk.bold.redBright(`> eslint has found ${report.errorCount} error(s)`)
+    );
     console.log(formatter(report.results));
 
     process.exitCode = 1; //eslint errors encountered means the process should exit not with exit code 0.
 
     return;
   }
-  console.log(chalk.bold.greenBright('> eslint finished without any errors!'));
+  console.log(chalk.bold.greenBright("> eslint finished without any errors!"));
+  process.env.exitCode = 0; //exit with success code
 })();
