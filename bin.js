@@ -33,30 +33,52 @@ module.exports = (() => {
 
   console.info("Trying to resolve .eslintrc.js file");
 
-  let curDir = __dirname;
+  console.info("Trying current working directory:", process.cwd());
 
-  for (let i = 0; i < 100; i++) {
-    try {
-      if (i > 0) {
-        console.info("Trying current folder: " + curDir);
-        let oldCurDir = curDir;
-        curDir = path.resolve(curDir, ".."); //parent folder
-        if (oldCurDir == curDir) {
-          //at the top of media disk volume - exit for loop trying to retrieve the .eslintrc.js file from parent folder
-          console.info(
-            "It is recommended to save an .eslintrc.js file in the folder structure where you run this tool."
-          );
-          break;
+  let curDir = process.cwd();
+
+  let configFilefound = false;
+
+  try {
+    configPath = path.join(curDir + "/.eslintrc.js");
+    configPath = path.normalize(configPath);
+    baseConfig = require(configPath);
+
+    console.info("Found config file in current working folder");
+
+    errorEncountered = false;
+    configFilefound = baseConfig !== "";
+  } catch (error) {
+    //ignore error handling for now at working folder
+    configFilefound = false;
+  }
+
+  if (!configFilefound) {
+    curDir = __dirname;
+
+    for (let i = 0; i < 100; i++) {
+      try {
+        if (i > 0) {
+          console.info("Trying lib folder of eslint-standalone: " + curDir);
+          let oldCurDir = curDir;
+          curDir = path.resolve(curDir, ".."); //parent folder
+          if (oldCurDir == curDir) {
+            //at the top of media disk volume - exit for loop trying to retrieve the .eslintrc.js file from parent folder
+            console.info(
+              "It is recommended to save an .eslintrc.js file in the folder structure where you run this tool."
+            );
+            break;
+          }
         }
+        configPath = path.join(curDir + "/.eslintrc.js");
+        configPath = path.normalize(configPath);
+        baseConfig = require(configPath);
+        errorEncountered = false;
+        break; //exit the for loop
+      } catch (error) {
+        process.stdout.write(".");
+        errorEncountered = true;
       }
-      configPath = path.join(curDir + "/.eslintrc.js");
-      configPath = path.normalize(configPath);
-      baseConfig = require(configPath);
-      errorEncountered = false;
-      break; //exit the for loop
-    } catch (error) {
-      process.stdout.write(".");
-      errorEncountered = true;
     }
   }
 
