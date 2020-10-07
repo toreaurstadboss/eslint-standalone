@@ -1,18 +1,25 @@
 <?xml version="1.0"?>
-<package >
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>EslintStandalone.Cli</id>
-    <version>1.1.0.0</version>
+    <version>1.2.2.0</version>
     <title>EslintStandalone.Cli</title>
     <authors>Tore Aurstad IT</authors>
+    <license type="file">license\license.txt</license>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <owners>$author$</owners>
     <projectUrl>https://github.com/toreaurstadboss/eslint-standalone</projectUrl>
-    <iconUrl>https://github.com/toreaurstad/WsTrustFiddlerWebTestExport/blob/master/labflask.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <icon>icon\labflask.png</icon>
+
+    <repository type="git" url="https://github.com/toreaurstadboss/eslint-standalone.git" />
     <description>Standalone tool for Eslint. https://eslint.org/ Run from the command line. Configured via a .eslintrc.js file within working folder.
-    Fallback to other .eslintrc folders as standard for EsLint. Build for Windows platform using node10-win platform compilation targetusing Pkg tool.
+    Fallback to other .eslintrc folders as standard for EsLint. Built for Windows platform using node10-win platform compilation targetusing Pkg tool.
+    See Project Url of this package for source code to repackage the standalone tool for other platforms using the Pkg tool for Node. 
     </description>
     <copyright>Copyright Tore Aurstad IT © 2019</copyright>
     <tags>Eslint CodeQuality Js Javascript</tags>
+    <contentFiles>
+      <files include="*" />
+    </contentFiles>
   </metadata>
 </package>
