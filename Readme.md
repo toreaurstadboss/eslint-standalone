@@ -75,6 +75,12 @@ Example of basic pkg command (note that this will build binaries for Windows, Ma
 pkg .
 ```
 
+### Limitations with the tool
+EsLint exits on first error encountered in each Javascript file. I have not found a way of getting all errors in a file. So you must 
+run the tool and fix the errors and then re-run it. I am trying to look through the EsLint documentation to find how to achieve this. 
+Maybe you have a tip for me here?
+<a href='https://eslint.org/docs/developer-guide/nodejs-api#cliengine'>https://eslint.org/docs/developer-guide/nodejs-api#cliengine</a>
+
 ### Can I use this in production environments ?
 
 Sure, note that there are no warranties whatsoever. One possible use could be on a build server. Note that if the tool finds errors,
