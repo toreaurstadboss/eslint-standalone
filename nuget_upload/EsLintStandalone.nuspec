@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>EslintStandalone.Cli</id>
+    <version>1.1.0.0</version>
+    <title>EslintStandalone.Cli</title>
+    <authors>Tore Aurstad IT</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/toreaurstadboss/eslint-standalone</projectUrl>
+    <iconUrl>https://github.com/toreaurstad/WsTrustFiddlerWebTestExport/blob/master/labflask.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Standalone tool for Eslint. https://eslint.org/ Run from the command line. Configured via a .eslintrc.js file within working folder.
+    Fallback to other .eslintrc folders as standard for EsLint. Build for Windows platform using node10-win platform compilation targetusing Pkg tool.
+    </description>
+    <copyright>Copyright Tore Aurstad IT © 2019</copyright>
+    <tags>Eslint CodeQuality Js Javascript</tags>
+  </metadata>
+</package>
