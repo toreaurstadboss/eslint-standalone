@@ -99,7 +99,8 @@ The following file includes a sample of a .eslintrc.js file, detecting support f
 
 ```javascript
 module.exports = {
-  plugins: ["ie11"],
+  plugins: ["ie11", "html"],
+  parser: "babel-eslint",
   env: {
     browser: true,
     node: true,
@@ -141,6 +142,19 @@ in a shell, if you have installed Chocolatey.
 REM After adding the tool to the path environment variable
 eslint-standalone
 ```
+
+#### How to specify file extensions to use?
+
+Here is how you can specify the file extensions to use as an example:
+
+```bash
+eslint-standalone.exe --ext .js,.html,.htm,.cshtml
+```
+
+Important, to be able to syntax check with Eslint standalone razor files, use the plugin "html"
+and also use the --ext argument specifying the file globs above. This will set the CLI engine options extensions.
+
+Use the --ext option and specify a comma separated list of file extensions to use.
 
 #### Other recommended tools for Visual Studio for linting
 

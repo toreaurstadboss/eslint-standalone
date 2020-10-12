@@ -12,7 +12,7 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}\\bin.js",
-      "args": ["--fix"]
+      "args": ["--fix --ext .js,.cshtml,.html,.htm"]
     }
   ]
 }

@@ -25,6 +25,21 @@ var runEsLint = function(baseConfig, args) {
     filesDir = ["./."];
   }
 
+  let argsString = args.toString();
+  let extIndex = -1;
+  extIndex = argsString.indexOf('--ext');
+  if (extIndex>= 0) {
+    let extensionsArray = argsString.split('--ext');
+    
+    if (extensionsArray.length <= 0) {
+      throw Error('Extensions passed in could not be parsed! Check your --ext argument. Should be: --ext .js,.html,.cshtml,.htm for example.');
+
+    }
+    let targetExtensions = extensionsArray[1].split(',');
+    cli.options.extensions = targetExtensions;
+    
+  }
+
   console.log(`> eslint is checking the following dir: ${filesDir}`);
 
   const report = cli.executeOnFiles(filesDir);

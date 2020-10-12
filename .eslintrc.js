@@ -1,5 +1,9 @@
 module.exports = {
-  "plugins": ["ie11"],
+  "plugins": [
+    "ie11",
+    "html"
+  ],
+  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
